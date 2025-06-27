@@ -15,6 +15,13 @@ jobs:
       SECRET_KEY: ${{secrets.SECRET_KEY}}
       ALGORITHM: ${{secrets.ALGORITHM}}
       ACCESS_TOKEN_EXPIRE_MINUTES: ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
+    
+    - name: Debug secret POSTGRES_PASSWORD
+      run: |
+        echo "POSTGRES_PASSWORD=${DATABASE_PASSWORD}"
+        echo "POSTGRES_USER=${{ secrets.DATABASE_USERNAME }}"
+        echo "POSTGRES_DB=${{ env.DATABASE_NAME_TEST }}"
+      # This is to ensure that the secrets are being passed correctly
 
     services:
       postgres:
