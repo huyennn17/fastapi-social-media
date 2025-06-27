@@ -4,8 +4,8 @@ from .routers import post, user, auth, vote
 from .config import settings
 from .database import engine
 from . import models
-        
-models.Base.metadata.create_all(bind=engine)
+
+# models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 app.title = "FastAPI Social Media"
