@@ -16,41 +16,7 @@ jobs:
       ALGORITHM: ${{secrets.ALGORITHM}}
       ACCESS_TOKEN_EXPIRE_MINUTES: ${{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
     
-    - name: Debug secret POSTGRES_PASSWORD
-      run: |
-        echo "POSTGRES_PASSWORD=${DATABASE_PASSWORD}"
-        echo "POSTGRES_USER=${{ secrets.DATABASE_USERNAME }}"
-        echo "POSTGRES_DB=${{ env.DATABASE_NAME_TEST }}"
-      # This is to ensure that the secrets are being passed correctly
-
-    services:
-      postgres:
-        image: postgres:latest
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_USER: ${{secrets.DATABASE_USERNAME}}
-          POSTGRES_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
-          POSTGRES_DB: ${{ env.DATABASE_NAME_TEST }}
-
-        options: >-
-          --health-cmd pg_isready 
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    runs-on: ubuntu-latest
     steps:
-      - name: pulling git repo
-        uses: actions/checkout@v2
-      - name: Install python version 3.11
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.11"
-      - name: update pip
-        run: python -m pip install --upgrade pip
-      - name: install all dependencies
-        run: pip install -r requirements.txt
       - name: Debug env vars
         run: |
           echo "DATABASE_HOSTNAME=${DATABASE_HOSTNAME}"
@@ -61,11 +27,39 @@ jobs:
           echo "SECRET_KEY=${SECRET_KEY}"
           echo "ALGORITHM=${ALGORITHM}"
           echo "ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}"
+    # services:
+    #   postgres:
+    #     image: postgres:latest
+    #     ports:
+    #       - 5432:5432
+    #     env:
+    #       POSTGRES_USER: ${{secrets.DATABASE_USERNAME}}
+    #       POSTGRES_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
+    #       POSTGRES_DB: ${{ env.DATABASE_NAME_TEST }}
+
+    #     options: >-
+    #       --health-cmd pg_isready 
+    #       --health-interval 10s
+    #       --health-timeout 5s
+    #       --health-retries 5
+
+    # runs-on: ubuntu-latest
+    # steps:
+    #   - name: pulling git repo
+    #     uses: actions/checkout@v2
+    #   - name: Install python version 3.11
+    #     uses: actions/setup-python@v2
+    #     with:
+    #       python-version: "3.11"
+    #   - name: update pip
+    #     run: python -m pip install --upgrade pip
+    #   - name: install all dependencies
+    #     run: pip install -r requirements.txt
        
-      - name: test with pytest
-        run: |
-          pip install pytest
-          pytest
+    #   - name: test with pytest
+    #     run: |
+    #       pip install pytest
+    #       pytest
 
 
 
