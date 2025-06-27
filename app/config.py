@@ -1,11 +1,11 @@
-import os
-from dotenv import load_dotenv
+# import os
+# from dotenv import load_dotenv
 
-env_path = os.path.abspath(".env")
-print("Using .env file at:", env_path)
+# env_path = os.path.abspath(".env")
+# print("Using .env file at:", env_path)
 
-load_dotenv(dotenv_path=env_path)
-print("DATABASE_PORT from os:", os.getenv("DATABASE_PORT"))
+# load_dotenv(dotenv_path=env_path)
+# print("DATABASE_PORT from os:", os.getenv("DATABASE_PORT"))
 
 from pydantic_settings import BaseSettings
 
@@ -23,5 +23,3 @@ class Settings(BaseSettings):
         env_file = ".env"
 
 settings = Settings()
-print(" Pydantic PORT:", settings.database_port)
-# Ensure that the settings are loaded correctly
