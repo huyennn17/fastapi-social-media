@@ -42,5 +42,17 @@ jobs:
         run: python -m pip install --upgrade pip
       - name: install all dependencies
         run: pip install -r requirements.txt
+      - name: Confirm environment and secrets
+        run: |
+          echo "ENVIRONMENT=${GITHUB_ENVIRONMENT}"
+          echo "DATABASE_HOSTNAME=${DATABASE_HOSTNAME}"
+          echo "DATABASE_PORT=${DATABASE_PORT}"
+          echo "DATABASE_NAME=${DATABASE_NAME}"
+          echo "DATABASE_USERNAME=${DATABASE_USERNAME}"
+          echo "DATABASE_PASSWORD=${DATABASE_PASSWORD}"
+          echo "SECRET_KEY=${SECRET_KEY}"
+          echo "ALGORITHM=${ALGORITHM}"
+          echo "ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}"
+
       - name: test with pytest
         run: pytest
