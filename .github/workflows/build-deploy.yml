@@ -46,6 +46,7 @@ jobs:
        
       - name: test with pytest
         run: |
+          echo "DATABASE_HOSTNAME=$DATABASE_HOSTNAME"
           pip install pytest
           pytest
 
