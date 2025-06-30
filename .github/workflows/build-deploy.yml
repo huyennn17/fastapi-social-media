@@ -41,7 +41,7 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-
+          
     env:
       DATABASE_HOSTNAME: localhost
       DATABASE_PORT: 5432
@@ -60,7 +60,7 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Debug SQLAlchemy URL
+      - name: Debug SQLAlchemy URL (optional)
         run: |
           echo "URL: postgresql://${{ secrets.DATABASE_USERNAME }}:${{ secrets.DATABASE_PASSWORD }}@localhost:5432/${{ secrets.DATABASE_NAME }}_test"
 
