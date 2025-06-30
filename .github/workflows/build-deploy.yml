@@ -36,7 +36,7 @@ jobs:
 
       - name: Check env values
         run: |
-          if [ "$DATABASE_HOSTNAME" = "postgres" ]; then
+          if [ "$DATABASE_HOSTNAME" = "postgres9" ]; then
             echo "true"
           else
             echo "false"
