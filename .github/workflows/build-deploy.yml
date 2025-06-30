@@ -36,7 +36,7 @@ jobs:
 
       - name: Check env values
         run: |
-          if [ "$DATABASE_HOSTNAME" = "postgr778es9" ]; then
+          if [ "$DATABASE_HOSTNAME" = "postgres" ]; then
             echo "true"
           else
             echo "false"
@@ -54,6 +54,7 @@ jobs:
             echo "false"
             exit 1
           fi
+          echo $SQLALCHEMY_DATABASE_URL
         env:
           DATABASE_HOSTNAME: ${{ secrets.DATABASE_HOSTNAME }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
