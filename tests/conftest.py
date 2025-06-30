@@ -12,8 +12,6 @@ SQLALCHEMY_DATABASE_URL = f"postgresql://{settings.database_username}:{settings.
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-print("SQLAlchemy URL:", SQLALCHEMY_DATABASE_URL)
-
 @pytest.fixture()
 def session():
     Base.metadata.drop_all(bind=engine)
