@@ -2,6 +2,7 @@ from typing import List
 from app import schemas
 import pytest
 
+
 def test_get_all_posts(authorized_client, test_posts):
     response = authorized_client.get("/posts/")
     def validate(post: schemas.Post):

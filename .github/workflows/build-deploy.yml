@@ -34,40 +34,22 @@ jobs:
       - name: install all dependencies
         run: pip install -r requirements.txt
 
-      - name: Check env values
-        run: |
-          if [ "$DATABASE_HOSTNAME" = "postgres" ]; then
-            echo "true"
-          else
-            echo "false"
-            exit 1
-          fi
-          if [ "$DATABASE_PASSWORD" = "password" ]; then
-            echo "true"
-          else
-            echo "false"
-            exit 1
-          fi
-          if [ "$DATABASE_USERNAME" = "postgres" ]; then
-            echo "true"
-          else
-            echo "false"
-            exit 1
-          fi
-          echo $SQLALCHEMY_DATABASE_URL
-        env:
-          DATABASE_HOSTNAME: ${{ secrets.DATABASE_HOSTNAME }}
-          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
-
-      - name: test with pytest
+  test:
+    runs-on: ubuntu-latest
+    env:  
+      DATABASE_HOSTNAME: ${{ secrets.DATABASE_HOSTNAME }}
+      DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      ALGORITHM: ${{ secrets.ALGORITHM }}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: Run tests
         run: pytest
-        env:
-          DATABASE_HOSTNAME: ${{ secrets.DATABASE_HOSTNAME }}
-          DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
-          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          ALGORITHM: ${{ secrets.ALGORITHM }}
-          ACCESS_TOKEN_EXPIRE_MINUTES: ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }}
