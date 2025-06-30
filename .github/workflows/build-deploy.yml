@@ -49,9 +49,9 @@ jobs:
             exit 1
           fi
           if [ "$DATABASE_USERNAME" = "postgres" ]; then
-            echo "✅ It is postgres"
+            echo "true"
           else
-            echo "❌ It is not postgres"
+            echo "false"
             exit 1
           fi
         env:
