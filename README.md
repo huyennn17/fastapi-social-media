@@ -107,7 +107,15 @@ fastapi-social-media/
 1. Create a `.env` file in the project root (the app loads it via `pydantic-settings`; see `app/config.py`).
 2. Set every variable listed in [§7. Environment Variables](#7-environment-variables) using **your own** values (never commit real secrets).
 
-> There is no `.env.example` file in the repository yet; you may add one for your team.
+1. Copy the provided `.env.example` file:
+
+```bash
+cp .env.example .env
+Update the .env file with your own values.
+
+The application loads environment variables using pydantic-settings (see app/config.py), so make sure all required variables are defined.
+
+Never commit your .env file. Only .env.example should be tracked in version control.
 
 ### Run locally
 
@@ -134,37 +142,7 @@ docker compose -f docker-compose-dev.yml up
 
 The dev compose file supplies example environment variables; **replace secrets** before any shared or production use.
 
-## 7. Environment Variables
-
-All of the following are **required** by `app/config.py` unless you change the settings model. Use placeholders locally; use strong secrets in production.
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `DATABASE_HOSTNAME` | PostgreSQL host (e.g. `localhost` or service name `postgres` in Docker) | Yes |
-| `DATABASE_PORT` | PostgreSQL port (e.g. `5432`) | Yes |
-| `DATABASE_PASSWORD` | PostgreSQL user password | Yes |
-| `DATABASE_NAME` | Database name | Yes |
-| `DATABASE_USERNAME` | PostgreSQL user name | Yes |
-| `SECRET_KEY` | Secret key for signing JWTs (use a long random string) | Yes |
-| `ALGORITHM` | JWT algorithm (e.g. `HS256`) | Yes |
-| `ACCESS_TOKEN_EXPIRE_MINUTES` | Access token lifetime in minutes (integer) | Yes |
-
-**Example placeholders (not for production):**
-
-```env
-DATABASE_HOSTNAME=localhost
-DATABASE_PORT=5432
-DATABASE_PASSWORD=your-db-password
-DATABASE_NAME=fastapi
-DATABASE_USERNAME=postgres
-SECRET_KEY=change-me-to-a-long-random-secret
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=30
-```
-
-> **`docker-compose-prod.yml`** maps `DATABASE_HOSTNAME` from a host variable named `POSTGRES_HOSTNAME`. Align your shell or `.env` with that file, or update the compose file manually for consistency.
-
-## 9. Usage
+## 7. Usage
 
 After the server is running:
 
@@ -193,7 +171,7 @@ curl -s http://127.0.0.1:8000/posts/ \
 
 For day-to-day exploration, **Swagger UI** at `/docs` is the simplest way to authenticate and try endpoints.
 
-## 10. API Documentation
+## 8. API Documentation
 
 Base URL when running locally: `http://127.0.0.1:8000` (adjust host/port as needed).
 
@@ -241,7 +219,7 @@ Base URL when running locally: `http://127.0.0.1:8000` (adjust host/port as need
 
 > For exhaustive request/response schemas and “Try it out”, use **`/docs`** at runtime.
 
-## 11. Database
+## 9. Database
 
 ### Main models
 
@@ -265,7 +243,7 @@ alembic revision --autogenerate -m "describe change"
 
 There is **no seed script** in the repository; use tests, SQL, or a small script if you need sample data.
 
-## 12. Testing
+## 10. Testing
 
 Tests use **pytest**, **httpx** (via Starlette/FastAPI `TestClient`), and fixtures in `tests/conftest.py` that override the `get_db` dependency and recreate tables with SQLAlchemy metadata.
 
@@ -283,7 +261,7 @@ pytest --cov=app --cov-report=term-missing
 
 > A legacy file `tests/datapase.py` exists with alternate fixtures; the active suite is driven by **`conftest.py`**. Some test functions omit the `test_` prefix and may not be collected—clean up manually if you rely on them.
 
-## 13. Deployment
+## 11. Deployment
 
 ### Docker image
 
